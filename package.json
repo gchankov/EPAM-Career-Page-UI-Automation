@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "description": "EPAM Careers UI Automation",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm run wd:update",
+    "wd:update": "node node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.37 --standalone false --gecko false",
+    "test": "node node_modules/protractor/bin/protractor ./protractor.config.js"
+  },
+  "author": "Gancho Chankov <Gancho_Chankov@epam.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "cucumber": "^4.0.0",
+    "cucumber-pretty": "^1.4.0",
+    "protractor": "^5.3.0",
+    "protractor-cucumber-framework": "^4.2.0",
+    "require-it": "^1.0.2",
+    "protractor-multiple-cucumber-html-reporter-plugin": "^1.6.1"
+  }
+}
