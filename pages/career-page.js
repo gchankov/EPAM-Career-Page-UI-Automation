@@ -72,14 +72,12 @@ module.exports = {
     },
 
     async getLocationDropdownPanelCountry(country) {
-        const locationDropdownPanel = await this.jobSearchLocationDropdownPanel;
-        const locationDropdownPanelCountry = await locationDropdownPanel.element(by.css('li[aria-label="' + country + '"]'));
+        const locationDropdownPanelCountry = await this.jobSearchLocationDropdownPanel.element(by.css('li[aria-label="' + country + '"]'));
         return locationDropdownPanelCountry;
     },
 
     async getLocationDropdownPanelCity(city) {
-        const locationDropdownPanel = await this.jobSearchLocationDropdownPanel;
-        const locationDropdownPanelCity = await locationDropdownPanel.element(by.css('li[id*="' + city + '"]'));
+        const locationDropdownPanelCity = await this.jobSearchLocationDropdownPanel.element(by.css('li[id*="' + city + '"]'));
         return locationDropdownPanelCity;
     },
 
@@ -100,8 +98,7 @@ module.exports = {
     },
 
     async getFirstSearchResultApplyButton() {
-        const firstSearchResult = await this.jobSearchResults.get(0);
-        const firstSearchResultApplyButton = await firstSearchResult.element(by.css('a.search-result__item-apply'));
+        const firstSearchResultApplyButton = await this.jobSearchResults.first().element(by.css('a.search-result__item-apply'));
         return firstSearchResultApplyButton;
     }
 };

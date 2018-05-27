@@ -26,23 +26,21 @@ Given(/the user is on EPAM Career page/, async () => {
 });
 
 Given(/the user applied job filters for all skills/, async () => {
-    const skillsDropdownSelect = await careerPage.jobSearchSkillsDropdownSelect;
-    await skillsDropdownSelect.click();
-    await scrollElementIntoView(careerPage.jobSearchSkillsDropdownPanel);
+    await careerPage.jobSearchSkillsDropdownSelect.click();
     await waitForElementClickable(careerPage.jobSearchSkillsDropdownPanel, 'Career page skills select drop down panel');
+    await scrollElementIntoView(careerPage.jobSearchSkillsDropdownPanel);
 
     const skillsDropdownPanelLabels = await careerPage.jobSearchSkillsDropdownLabels;
     await Promise.all(skillsDropdownPanelLabels.map((skillsDropdownPanelLabel) => {
         return skillsDropdownPanelLabel.click();
     }));
-    await skillsDropdownSelect.click();
+    await careerPage.jobSearchSkillsDropdownSelect.click();
     await scrollElementIntoView(careerPage.jobSearchFilterTagsPanel);
 });
 
 Given(/the user is on job listing page with application form/, async () => {
     await careerPage.open();
-    const jobSearchButton = await careerPage.jobSearchButton;
-    await jobSearchButton.click();
+    await careerPage.jobSearchButton.click();
     await waitForElementClickable(careerPage.jobSearchResultsList, 'Career page job search results list');
     const firstSearchResultApplyButton = await careerPage.getFirstSearchResultApplyButton();
     await firstSearchResultApplyButton.click();
@@ -53,24 +51,21 @@ When(/the job search form loads/, async () => {
 });
 
 When(/the user clicks on job search button/, async () => {
-    const jobSearchButton = await careerPage.jobSearchButton;
-    await jobSearchButton.click();
+    await careerPage.jobSearchButton.click();
 });
 
 When(/the user enters "(.+)" keyword in job search input/, async (keyword) => {
-    const jobSearchInputField = await careerPage.jobSearchInputField;
-    await jobSearchInputField.sendKeys(keyword);
+    await careerPage.jobSearchInputField.sendKeys(keyword);
 });
 
 When(/the user clicks on location drop down select/, async () => {
-    const jobSearchLocationDropdownSelect = await careerPage.jobSearchLocationDropdownSelect;
-    await jobSearchLocationDropdownSelect.click();
+    await careerPage.jobSearchLocationDropdownSelect.click();
     await waitForElementClickable(careerPage.jobSearchLocationDropdownPanel, 'Career page job location select drop down panel');
 });
 
 When(/the user selects "(.+)" country from location drop down select/, async (country) => {
     const locationDropdownPanelCountry = await careerPage.getLocationDropdownPanelCountry(country);
-    await waitForElementClickable(locationDropdownPanelCountry, 'Location select ' + country + ' country option');
+    await waitForVisibilityOfElement(locationDropdownPanelCountry);
     await locationDropdownPanelCountry.click();
     // await waitForPageReady();
     await browser.sleep(1000);
@@ -78,9 +73,9 @@ When(/the user selects "(.+)" country from location drop down select/, async (co
 
 When(/the user selects "(.+)" city from location drop down select/, async (city) => {
     const locationDropdownPanelCity = await careerPage.getLocationDropdownPanelCity(city);
-    await waitForElementClickable(locationDropdownPanelCity, 'Location select ' + city + ' city option');
+    await waitForVisibilityOfElement(locationDropdownPanelCity);
     await locationDropdownPanelCity.click();
-    await waitForTextToBePresentInElement(city, careerPage.jobSearchLocationDropdownSelect, 'location drop down select')
+    await waitForTextToBePresentInElement(city, careerPage.jobSearchLocationDropdownSelect, 'Career page location drop down select')
 });
 
 When(/the user clicks on skills drop down select/, async () => {
@@ -95,8 +90,7 @@ When(/the user applies all skills drop down checkboxes/, async () => {
     await Promise.all(skillsDropdownPanelLabels.map((skillsDropdownPanelLabel) => {
         return skillsDropdownPanelLabel.click();
     }));
-    const skillsDropdownSelect = await careerPage.jobSearchSkillsDropdownSelect;
-    await skillsDropdownSelect.click();
+    await careerPage.jobSearchSkillsDropdownSelect.click();
     await scrollElementIntoView(careerPage.jobSearchFilterTagsPanel);
 });
 
@@ -111,6 +105,7 @@ When(/the user clicks apply button on first job result/, async () => {
     await waitForElementClickable(careerPage.jobSearchResultsList, 'Career page job search results list');
     const firstSearchResultApplyButton = await careerPage.getFirstSearchResultApplyButton();
     await firstSearchResultApplyButton.click();
+
 });
 
 Then(/job search input field should be displayed/, async () => {
@@ -222,8 +217,7 @@ Then(/all expected skills with checkboxes should be displayed/, async () => {
         return isSkillsDropdownPanelCheckboxPresent;
     }), 'Not all expected skills checkboxes are present.').to.be.true;
 
-    const skillsDropdownPanel = await careerPage.jobSearchSkillsDropdownPanel;
-    const skillsDropdownPanelText = await skillsDropdownPanel.getText();
+    const skillsDropdownPanelText = await careerPage.jobSearchSkillsDropdownPanel.getText();
     expect(skillsDropdownPanelText).to.deep.equal(expectedDropdownSkillsText);
 });
 
@@ -245,13 +239,11 @@ Then(/job filter tags for all skills should be displayed/, async () => {
 
 Then(/"(.+)" message should be displayed/, async (message) => {
     await waitForElementClickable(careerPage.jobSearchResultsError, 'Career page job search no results message');
-    const searchResultsErrorMessage = await careerPage.jobSearchResultsError;
-    const searchResultsErrorMessageText = await searchResultsErrorMessage.getText();
+    const searchResultsErrorMessageText = await careerPage.jobSearchResultsError.getText();
     expect(searchResultsErrorMessageText).to.equal(message);
 });
 
 Then(/no job skill filter should be displayed/, async () => {
-    const searchFilterTagsPanel = await careerPage.jobSearchFilterTagsPanel;
-    const searchFilterTagsPanelText = await searchFilterTagsPanel.getText();
+    const searchFilterTagsPanelText = await careerPage.jobSearchFilterTagsPanel.getText();
     expect(searchFilterTagsPanelText, 'Some filter tags are still displayed. ' + searchFilterTagsPanelText).to.be.empty;
 });

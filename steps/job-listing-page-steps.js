@@ -4,9 +4,8 @@ const { When, Then } = require('cucumber');
 const jobListingPage = require('./../pages/job-listing-page');
 
 When(/the user submits empty application form/, async () => {
-    const applicationFormSubmitButton = await jobListingPage.applicationFormSubmitButton;
-    await scrollElementIntoView(applicationFormSubmitButton);
-    await applicationFormSubmitButton.click();
+    await scrollElementIntoView(jobListingPage.applicationFormSubmitButton);
+    await jobListingPage.applicationFormSubmitButton.click();
 });
 
 Then(/job listing page should be opened/, async () => {
@@ -16,43 +15,37 @@ Then(/job listing page should be opened/, async () => {
 
 Then(/job listing page should contain position/, async () => {
     await waitForElementClickable(jobListingPage.heading, 'Job listing page heading');
-    const jobListingPageHeading = await jobListingPage.heading;
-    const jobListingPageHeadingText = await jobListingPageHeading.getText();
+    const jobListingPageHeadingText = await jobListingPage.heading.getText();
     expect(jobListingPageHeadingText).to.not.be.empty;
 });
 
 Then(/job listing page should contain location/, async () => {
     await waitForElementClickable(jobListingPage.location, 'Job listing page location');
-    const jobListingPageLocation = await jobListingPage.location;
-    const jobListingPageLocationText = await jobListingPageLocation.getText();
+    const jobListingPageLocationText = await jobListingPage.location.getText();
     expect(jobListingPageLocationText).to.not.be.empty;
 });
 
 Then(/job listing page should contain job id/, async () => {
     await waitForElementClickable(jobListingPage.jobId, 'Job listing page job id');
-    const jobListingPageJobId = await jobListingPage.jobId;
-    const jobListingPageJobIdText = await jobListingPageJobId.getText();
+    const jobListingPageJobIdText = await jobListingPage.jobId.getText();
     expect(jobListingPageJobIdText).to.not.be.empty;
 });
 
 Then(/job listing page should contain descpiption/, async () => {
     await waitForElementClickable(jobListingPage.description, 'Job listing page descpiption');
-    const jobListingPageDescription = await jobListingPage.description;
-    const jobListingPageDescriptionText = await jobListingPageDescription.getText();
+    const jobListingPageDescriptionText = await jobListingPage.description.getText();
     expect(jobListingPageDescriptionText).to.not.be.empty;
 });
 
 Then(/job listing page should contain responsibilities/, async () => {
     await waitForElementClickable(jobListingPage.content, 'Job listing page content');
-    const jobListingPageContent = await jobListingPage.content;
-    const jobListingPageContentText = await jobListingPageContent.getText();
+    const jobListingPageContentText = await jobListingPage.content.getText();
     expect(jobListingPageContentText).to.contain('RESPONSIBILITIES');
 });
 
 Then(/job listing page should contain requirements/, async () => {
     await waitForElementClickable(jobListingPage.content, 'Job listing page content');
-    const jobListingPageContent = await jobListingPage.content;
-    const jobListingPageContentText = await jobListingPageContent.getText();
+    const jobListingPageContentText = await jobListingPage.content.getText();
     expect(jobListingPageContentText).to.contain('REQUIREMENTS');
 });
 
@@ -62,15 +55,13 @@ Then(/job listing page should contain application form/, async () => {
 
 Then(/the application form should contain heading with position/, async () => {
     await waitForElementClickable(jobListingPage.applicationFormHeadingPosition, 'Job listing page application form heading position');
-    const applicationFormHeadingPosition = await jobListingPage.applicationFormHeadingPosition;
-    const applicationFormHeadingPositionText = await applicationFormHeadingPosition.getText();
+    const applicationFormHeadingPositionText = await jobListingPage.applicationFormHeadingPosition.getText();
     expect(applicationFormHeadingPositionText).to.not.be.empty;
 });
 
 Then(/the application form should contain heading with location/, async () => {
     await waitForElementClickable(jobListingPage.applicationFormHeadingLocation, 'Job listing page application form heading location');
-    const applicationFormHeadingLocation = await jobListingPage.applicationFormHeadingLocation;
-    const applicationFormHeadingLocationText = await applicationFormHeadingLocation.getText();
+    const applicationFormHeadingLocationText = await jobListingPage.applicationFormHeadingLocation.getText();
     expect(applicationFormHeadingLocationText).to.not.be.empty;
 });
 
@@ -123,31 +114,26 @@ Then(/the application form should contain submit button/, async () => {
 });
 
 Then(/first name input field should be colored in red/, async () => {
-    const applicationFormFirstnameInputField = await jobListingPage.applicationFormFirstnameInputField;
-    const applicationFormFirstnameInputFieldBorderColor = await applicationFormFirstnameInputField.getCssValue('border-color');
+    const applicationFormFirstnameInputFieldBorderColor = await jobListingPage.applicationFormFirstnameInputField.getCssValue('border-color');
     expect(applicationFormFirstnameInputFieldBorderColor).to.equal('rgb(241, 92, 67)');
 });
 
 Then(/last name input field should be colored in red/, async () => {
-    const applicationFormLastnameInputField = await jobListingPage.applicationFormLastnameInputField;
-    const applicationFormLastnameInputFieldBorderColor = await applicationFormLastnameInputField.getCssValue('border-color');
+    const applicationFormLastnameInputFieldBorderColor = await jobListingPage.applicationFormLastnameInputField.getCssValue('border-color');
     expect(applicationFormLastnameInputFieldBorderColor).to.equal('rgb(241, 92, 67)');
 });
 
 Then(/email input field should be colored in red/, async () => {
-    const applicationFormEmailInputField = await jobListingPage.applicationFormEmailInputField;
-    const applicationFormEmailInputFieldBorderColor = await applicationFormEmailInputField.getCssValue('border-color');
+    const applicationFormEmailInputFieldBorderColor = await jobListingPage.applicationFormEmailInputField.getCssValue('border-color');
     expect(applicationFormEmailInputFieldBorderColor).to.equal('rgb(241, 92, 67)');
 });
 
 Then(/country drop down select should be colored in red/, async () => {
-    const applicationFormCountryDropdownSelect = await jobListingPage.applicationFormCountryDropdownSelect;
-    const applicationFormCountryDropdownSelectBorderColor = await applicationFormCountryDropdownSelect.getCssValue('border-color');
+    const applicationFormCountryDropdownSelectBorderColor = await jobListingPage.applicationFormCountryDropdownSelect.getCssValue('border-color');
     expect(applicationFormCountryDropdownSelectBorderColor).to.equal('rgb(241, 92, 67)');
 });
 
 Then(/captcha input field should be colored in red/, async () => {
-    const applicationFormCaptchaInputField = await jobListingPage.applicationFormCaptchaInputField;
-    const applicationFormCaptchaInputFieldBorderColor = await applicationFormCaptchaInputField.getCssValue('border-color');
+    const applicationFormCaptchaInputFieldBorderColor = await jobListingPage.applicationFormCaptchaInputField.getCssValue('border-color');
     expect(applicationFormCaptchaInputFieldBorderColor).to.equal('rgb(241, 92, 67)');
 });

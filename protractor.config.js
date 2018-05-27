@@ -19,7 +19,7 @@ exports.config = {
         metadata: {
             browser: {
                 name: 'chrome',
-                version: '65.0.3325.181'
+                version: '66.0.3325.181'
             },
             device: 'Virtual Machine',
             platform: {
@@ -43,7 +43,7 @@ exports.config = {
     },
     framework: 'custom',
     frameworkPath: require.resolve('protractor-cucumber-framework'),
-    chromeDriver: path.join(requireIt.directory('protractor'), 'node_modules', 'webdriver-manager', 'selenium', 'chromedriver_2.37' + (os.platform() === 'win32' ? '.exe' : '')),
+    chromeDriver: path.join(requireIt.directory('protractor'), 'node_modules', 'webdriver-manager', 'selenium', 'chromedriver_2.38' + (os.platform() === 'win32' ? '.exe' : '')),
     plugins: [{
         package: 'protractor-multiple-cucumber-html-reporter-plugin',
         options:{
@@ -66,6 +66,9 @@ exports.config = {
         };
         global.waitForTextToBePresentInElement = async (text, element, name) => {
             await browser.wait(ec.textToBePresentInElement(element, text), GLOBAL_TIMEOUT, text + ' text is not present in ' + name + ' element.');
+        };
+        global.waitForVisibilityOfElement = async (element, name) => {
+            await browser.wait(ec.visibilityOf(element), GLOBAL_TIMEOUT, name + ' element is not visible.');
         };
         global.waitForPageReady = async () => {
             await browser.waitForAngular();

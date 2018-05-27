@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "npm run wd:update",
-    "wd:update": "node node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.37 --standalone false --gecko false",
+    "wd:update": "node node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.38 --standalone false --gecko false",
     "test": "node node_modules/protractor/bin/protractor ./protractor.config.js"
   },
   "author": "Gancho Chankov <Gancho_Chankov@epam.com>",
