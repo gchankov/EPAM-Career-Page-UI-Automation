@@ -5,18 +5,18 @@ const fs = require('fs');
 
 setDefaultTimeout(GLOBAL_TIMEOUT + 5000);
 
-Before(() => {
+Before(async () => {
     global.expectedData = {};
+    await resetScrollView();
 });
 
-After((scenario) => {
+After(async (scenario) => {
     if (scenario.result.status === 'failed') {
-        return browser.takeScreenshot().then((png) => {
-    	    fs.writeFile(__dirname + '/../../results/' + scenario.pickle.name + '.png', new Buffer(png, 'base64'), (error) => {
-                if (error) {
-                    console.error(error.message);
-                }
-            });
+        const png = await browser.takeScreenshot();
+        fs.writeFile(__dirname + '/../results/' + scenario.pickle.name + '.png', new Buffer(png, 'base64'), (error) => {
+            if (error) {
+                console.error(error.message);
+            }
         });
     }
 });

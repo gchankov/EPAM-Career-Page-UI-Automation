@@ -52,20 +52,40 @@ exports.config = {
             reportName: 'EPAM Careers UI Automation Report'
         }
     }],
-    onPrepare: function () {
+    SELENIUM_PROMISE_MANAGER: false,
+    onPrepare: async () => {
         const chai = require('chai');
-        chai.use(require('chai-as-promised'));
         global.expect = chai.expect;
         global.GLOBAL_TIMEOUT = GLOBAL_TIMEOUT;
         global.ec = protractor.ExpectedConditions;
-        global.waitForElementDisplayed = (element, name) => {
-            return browser.wait(ec.elementToBeClickable(element), GLOBAL_TIMEOUT, name + ' element didn\'t load.');
-        }
-        global.waitForElementNotDisplayed = (element, name) => {
-            return browser.wait(ec.invisibilityOf(element), GLOBAL_TIMEOUT, name + ' element didn\'t hide.');
-        }
+        global.waitForElementClickable = async (element, name) => {
+            await browser.wait(ec.elementToBeClickable(element), GLOBAL_TIMEOUT, name + ' element is not displayed.');
+        };
+        global.waitForElementInvisible = async (element, name) => {
+            await browser.wait(ec.invisibilityOf(element), GLOBAL_TIMEOUT, name + ' element is not invisible.');
+        };
+        global.waitForTextToBePresentInElement = async (text, element, name) => {
+            await browser.wait(ec.textToBePresentInElement(element, text), GLOBAL_TIMEOUT, text + ' text is not present in ' + name + ' element.');
+        };
+        global.waitForPageReady = async () => {
+            await browser.waitForAngular();
+            await browser.wait(async () => {
+                const ajaxReady = await browser.executeScript('return jQuery.active === 0');
+                return ajaxReady;
+            }, GLOBAL_TIMEOUT, 'AJAX activity not finished.');
+            await browser.wait(async () => {
+                const documentReady = await browser.executeScript('return document.readyState === "complete"');
+                return documentReady;
+            }, GLOBAL_TIMEOUT, 'Document not ready.');
+        };
+        global.scrollElementIntoView = async (element) => {
+            await browser.executeScript('arguments[0].scrollIntoView({behavior: "instant", block: "center", inline: "center"})', element);
+        };
+        global.resetScrollView = async () => {
+            await browser.executeScript('window.scrollTo(0,0)');
+        };
 
         browser.waitForAngularEnabled(false);
-        return browser.manage().window().maximize();
+        await browser.manage().window().maximize();
     }
 };
